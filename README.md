@@ -1,0 +1,1 @@
+## Projekts tapis NLP kursa ietvarā. MK & GI
