@@ -13,7 +13,8 @@ function Main() {
       const response = await axios.get(`http://localhost:5000/submit?value=${value}`);
       const data = response.data;
       setData(data)
-      setResponse(true);
+      setResponse(true)
+      console.log(data)
     } catch (error) {
       console.error(error);
     }
@@ -23,7 +24,7 @@ function Main() {
       <h1 className="headerOverlap">Extractive Text Summarizer</h1>
       <div className="split left">
         <div className="centered">
-          <h2 className="header">Input</h2>
+          <h2 className="headerIn">Input</h2>
           <form onSubmit={handleSubmit}>
             <textarea
               className="textbox"
@@ -37,11 +38,16 @@ function Main() {
     
       <div className="split right">
         <div className="centered">
-          <h2 className="header">Output</h2>
-          {/* { response && (
-            <p className="receivedText"><b>RECEIVED RESPONSE:</b><br/>{data}</p>
-          )} */}
-          <p className="receivedText">Heeeyyyyy</p>
+          { response && (
+            <>
+            <h2 className="header">Output</h2>
+            <ul className='outputSentenceParent'>
+            {data.map((item, index) => (
+              <li className="outputSentence"key={index}>{item.sentence}</li>
+            ))}
+          </ul>
+            </>
+          )}
         </div>
       </div>
     </>
