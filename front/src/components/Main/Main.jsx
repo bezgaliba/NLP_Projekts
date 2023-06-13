@@ -3,14 +3,15 @@ import axios from 'axios';
 import './Main.css'
 
 function Main() {
-  const [value, setValue] = useState('');
+  const [text, setText] = useState('');
+  const [count, setCount] = useState('');
   const [data, setData] = useState();
   const [response, setResponse] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`http://localhost:5000/submit?value=${value}`);
+      const response = await axios.get(`http://localhost:5000/submit?text=${text}&count=${count}`);
       const data = response.data;
       setData(data)
       setResponse(true)
@@ -25,12 +26,27 @@ function Main() {
       <div className="split left">
         <div className="centered">
           <h2 className="headerIn">Input</h2>
+          <p className="instructionsTop">Enter full text:</p>
           <form onSubmit={handleSubmit}>
             <textarea
               className="textbox"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
+            <div className="input-container">
+              <p className="instructionsBtm">Enter outputted sentence count:</p>
+              <input
+                className="valuebox"
+                value={count}
+                onChange={(e) => {
+                  const input = e.target.value;
+                  if (/^\d{0,2}$/.test(input)) {
+                    setCount(input);
+                  }
+                }}
+                maxLength={2}
+              />
+            </div>
             <button className="button" type="submit">Submit</button>
           </form>
         </div>
