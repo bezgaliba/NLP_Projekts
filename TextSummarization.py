@@ -71,7 +71,7 @@ def normalize_and_remove_stopwords(text):
 def calculate_sentence_weights(text, token_values, count):
     def denormalize_sentence(sentence):
         # Pirmo burtu palielināšana
-        sentence = sentence.capitalize()
+        sentence = sentence[:1].upper() + sentence[1:]
         # I palielināšana (angļu valodas nolūkos)
         sentence = re.sub(r'\b(i)\b', 'I', sentence)
         return sentence
