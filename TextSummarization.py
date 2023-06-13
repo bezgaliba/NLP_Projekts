@@ -1,8 +1,9 @@
-# from flask import Flask, request
-# from flask_cors import CORS
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import nltk
 import re
 import collections
+import json
 from nltk.corpus import stopwords
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -36,9 +37,8 @@ def tokenize_text(text):
     tokens = nltk.word_tokenize(text)
     return tokens
 
-
 def normalize_and_remove_stopwords(text):
-    stop_words = set(stopwords.words('english')) #NLTK bibliotēkas stop vārdi
+    stop_words = set(stopwords.words('english')) #NLTK bibliotēkas stop vārdi angļu valodā
 
     def remove_stopwords(tokens):
         filtered_tokens = [token for token in tokens if token.lower() not in stop_words]
@@ -57,8 +57,24 @@ def normalize_and_remove_stopwords(text):
     normalized_text = '\n'.join(filtered_sentences)
     return normalized_text
 
-# TODO
-# Izveidot funkciju teikumu vērtības noteikšanai, izmantojot aprēķinātās tokenu vērtības
+def calculate_sentence_weights(text, token_values):
+    def denormalize_sentence(sentence):
+        # Pirmo burtu palielināšana
+        sentence = sentence.capitalize()
+        # I palielināšana (angļu valodas nolūkos)
+        sentence = re.sub(r'\b(i)\b', 'I', sentence)
+        return sentence
+
+    sentences = nltk.sent_tokenize(text)
+    denormalized_sentences = [denormalize_sentence(sentence) for sentence in sentences]
+    sentence_weights = []
+
+    for sentence in denormalized_sentences:
+        sentence_tokens = nltk.word_tokenize(sentence)
+        weight_sum = sum(token_values.get(token.lower(), 0) for token in sentence_tokens)
+        sentence_weights.append({"sentence": sentence, "weight": weight_sum})
+
+    return sentence_weights
 
 # MAIN FUNKCIJA
 
@@ -74,7 +90,11 @@ frequentedText = frequency(tokenizedText)
 print(f"Absolūtais biežums:\n{frequentedText}")
 
 tokenValues = assign_token_values(frequentedText)
-print(f"Tokenu vērtības: \n{tokenValues}")
+print(f"Tokenu svaru vērtības: \n{tokenValues}")
+
+sentenceWeights = calculate_sentence_weights(value, tokenValues)
+json_data = json.dumps(sentenceWeights, indent=4, ensure_ascii=False)
+print(f"Svērtības svaru summa:\n{json_data}")
 
 # if __name__ == '__main__':
 #     app.run()
