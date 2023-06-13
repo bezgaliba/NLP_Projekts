@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
 .textbox {
-margin-left: 0.3rem;
+  margin-left: 0.3rem;
   width: 100%;
   height: 200px;
   padding: 12px;
@@ -79,10 +79,11 @@ margin-left: 0.3rem;
 
 .header{
   font-family: Playfair Display;
+  padding-left: 3rem;
 }
 
 .headerIn{
-  padding-bottom: 4rem;
+  padding-bottom: 1rem;
   font-family: Playfair Display;
   padding-left: 1.5rem;
 }
@@ -115,4 +116,5 @@ margin-left: 0.3rem;
   font-family: Source Sans Pro;
   width: 30rem;
   margin-top: 3rem;
+  list-style: none;
 }
