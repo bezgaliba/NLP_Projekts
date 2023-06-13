@@ -13,13 +13,17 @@ CORS(app)
 
 @app.route('/submit', methods=['GET'])
 def submit():
-    text = request.args.get('value')
+    text = request.args.get('text')
+    importance_ratio = request.args.get('count')
+
+    if text is None or importance_ratio is None:
+        return jsonify(error='Missing argument (text, count) / Trūkst argumenti (text, count)'), 400
 
     normalizedText = normalize_and_remove_stopwords(text)
     tokenizedText = tokenize_text(normalizedText)
     frequentedText = frequency(tokenizedText)
     tokenValues = assign_token_values(frequentedText)
-    sentenceWeights = calculate_sentence_weights(text, tokenValues)
+    sentenceWeights = calculate_sentence_weights(text, tokenValues, int(importance_ratio))
 
     response = jsonify(sentenceWeights)
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -64,7 +68,7 @@ def normalize_and_remove_stopwords(text):
     normalized_text = '\n'.join(filtered_sentences)
     return normalized_text
 
-def calculate_sentence_weights(text, token_values):
+def calculate_sentence_weights(text, token_values, count):
     def denormalize_sentence(sentence):
         # Pirmo burtu palielināšana
         sentence = sentence.capitalize()
@@ -81,8 +85,11 @@ def calculate_sentence_weights(text, token_values):
         weight_sum = sum(token_values.get(token.lower(), 0) for token in sentence_tokens)
         sentence_weights.append({"sentence": sentence, "weight": weight_sum})
 
-    return sentence_weights
+    sorted_sentences = sorted(sentence_weights, key=lambda x: x['weight'], reverse=True)
+    top_sentences = sorted_sentences[:count]
 
+    return top_sentences
+    
 # Atkomentēt tālāko, ja gribiet redzēt starprezultātus jeb 'breakpoints'
 
 # value = input("Ievadiet apstrādājamo tekstu: ")
