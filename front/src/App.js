@@ -1,10 +1,14 @@
 import {
-  Main
+  Main,
+  Footer
 } from "./components/index"
 
 function App() {
   return (
+    <>
     <Main />
+    <Footer />
+    </>
   );
 }
 

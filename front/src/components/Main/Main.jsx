@@ -18,22 +18,33 @@ function Main() {
       console.error(error);
     }
   };
-
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className='textbox'
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-        { response && (
-          <p><b>RECEIVED RESPONSE:</b><br></br>{data}</p>
-        )}
-      </form>
-    </div>
+    <>
+      <h1 className="headerOverlap">Extractive Text Summarizer</h1>
+      <div className="split left">
+        <div className="centered">
+          <h2 className="header">Input</h2>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              className="textbox"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <button className="button" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    
+      <div className="split right">
+        <div className="centered">
+          <h2 className="header">Output</h2>
+          {/* { response && (
+            <p className="receivedText"><b>RECEIVED RESPONSE:</b><br/>{data}</p>
+          )} */}
+          <p className="receivedText">Heeeyyyyy</p>
+        </div>
+      </div>
+    </>
   );
 }
 
