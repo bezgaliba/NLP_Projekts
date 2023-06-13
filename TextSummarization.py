@@ -8,15 +8,22 @@ from nltk.corpus import stopwords
 nltk.download('punkt')
 nltk.download('stopwords')
 
-# app = Flask(__name__)
-# CORS(app)
+app = Flask(__name__)
+CORS(app)
 
-# @app.route('/submit')
+@app.route('/submit', methods=['GET'])
+def submit():
+    text = request.args.get('value')
 
-# def submit():
-#     value = input("Ievadiet apstrādājamo tekstu: ")
-#     normalized_text = normalize_text(value)
-#     return f"Normalized text:\n{normalized_text}"
+    normalizedText = normalize_and_remove_stopwords(text)
+    tokenizedText = tokenize_text(normalizedText)
+    frequentedText = frequency(tokenizedText)
+    tokenValues = assign_token_values(frequentedText)
+    sentenceWeights = calculate_sentence_weights(text, tokenValues)
+
+    response = jsonify(sentenceWeights)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 def assign_token_values(token_list):
     token_counts = [token_count.split(': ') for token_count in token_list]
@@ -76,25 +83,25 @@ def calculate_sentence_weights(text, token_values):
 
     return sentence_weights
 
-# MAIN FUNKCIJA
+# Atkomentēt tālāko, ja gribiet redzēt starprezultātus jeb 'breakpoints'
 
-value = input("Ievadiet apstrādājamo tekstu: ")
+# value = input("Ievadiet apstrādājamo tekstu: ")
 
-normalizedText = normalize_and_remove_stopwords(value)
-print(f"Normalizēts teksts:\n{normalizedText}")
+# normalizedText = normalize_and_remove_stopwords(value)
+# print(f"Normalizēts teksts:\n{normalizedText}")
 
-tokenizedText = tokenize_text(normalizedText)
-print(f"Tokeni:\n{tokenizedText}")
+# tokenizedText = tokenize_text(normalizedText)
+# print(f"Tokeni:\n{tokenizedText}")
 
-frequentedText = frequency(tokenizedText)
-print(f"Absolūtais biežums:\n{frequentedText}")
+# frequentedText = frequency(tokenizedText)
+# print(f"Absolūtais biežums:\n{frequentedText}")
 
-tokenValues = assign_token_values(frequentedText)
-print(f"Tokenu svaru vērtības: \n{tokenValues}")
+# tokenValues = assign_token_values(frequentedText)
+# print(f"Tokenu svaru vērtības: \n{tokenValues}")
 
-sentenceWeights = calculate_sentence_weights(value, tokenValues)
-json_data = json.dumps(sentenceWeights, indent=4, ensure_ascii=False)
-print(f"Svērtības svaru summa:\n{json_data}")
+# sentenceWeights = calculate_sentence_weights(value, tokenValues)
+# json_data = json.dumps(sentenceWeights, indent=4, ensure_ascii=False)
+# print(f"Svērtības svaru summa:\n{json_data}")
 
-# if __name__ == '__main__':
-#     app.run()
+if __name__ == '__main__':
+    app.run()
