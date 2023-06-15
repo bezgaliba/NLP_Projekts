@@ -4,10 +4,10 @@
 Teksta apkopošanas mērķis ir no apjomīga teksta izveidot daudz īsāku apkopojumu, nezaudējot oriģinālā teksta būtību.
 
 Eksāmena darba uzdevums ir ar programmu iegūt teksta apkopojumu, izmantojot "Extractive summarization" metodi, kas noņem liekos teikumus no lietotāja ievadītā teksta un atstāj paša lietotāja ievadīto skaitu pašu vērtīgāko teikumu, nemainot to struktūru, bet atstātos teikumus sakārtojot dilstošā secībā pēc aprēķinātās vērtības
-##Darba autori
+## Darba autori
 * Māris Kalniņš, mk20126
 * Gvido Igaunis, gi20003
-##programmas darbība
+## Programmas darbība
 Teksta apkopošanas programma paņem lietotāja saskarnē ievadīto tekstu, un saglabājamo teikumu skaitu, un veic secīgi šādas darbības:
 * Normalizē tekstu un noņem nenozīmīgos vārdus (stop words);
 * Tokenizē normalizēto tekstu vārdu biežuma noteikšanai;
