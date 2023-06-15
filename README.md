@@ -1,6 +1,6 @@
 # Ievads dabiskās valodas apstrādē
 # Eksāmena darbs "Teksta apkopošana"
-##Darba mērķis
+## Darba mērķis
 Teksta apkopošanas mērķis ir no apjomīga teksta izveidot daudz īsāku apkopojumu, nezaudējot oriģinālā teksta būtību.
 
 Eksāmena darba uzdevums ir ar programmu iegūt teksta apkopojumu, izmantojot "Extractive summarization" metodi, kas noņem liekos teikumus no lietotāja ievadītā teksta un atstāj paša lietotāja ievadīto skaitu pašu vērtīgāko teikumu, nemainot to struktūru, bet atstātos teikumus sakārtojot dilstošā secībā pēc aprēķinātās vērtības
