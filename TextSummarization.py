@@ -4,6 +4,7 @@ import nltk
 import re
 import collections
 import json
+from rouge import Rouge
 from nltk.corpus import stopwords
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -28,7 +29,15 @@ def submit():
     tokenValues = assign_token_values(frequentedText)
     sentenceWeights = calculate_sentence_weights(text, tokenValues, int(importance_ratio))
 
-    response = jsonify(sentenceWeights)
+    rouge_scores = calculate_rouge_scores(text, sentenceWeights)
+
+    response = {
+        'sentenceWeights': sentenceWeights,
+        'rougeScores': rouge_scores
+    }
+
+
+    response = jsonify(response)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -100,6 +109,17 @@ def calculate_sentence_weights(text, token_values, count):
     top_sentences = sorted_sentences[:count]
 
     return top_sentences
+
+# Izveidots ROUGE kalkulators, kas izrēķina precizitāti starp oriģinālo tekstu
+# un apkopoto tekstu. Tiek aprēķināts ROUGE-1 (unigramma), ROUGE-2 (bigramma)
+# un ROUGE-L (viss teksts) priekš precizitātes.
+def calculate_rouge_scores(original_text, summary_sentences):
+    rouge = Rouge()
+    original_sentences = nltk.sent_tokenize(original_text)
+    original_text = ' '.join(original_sentences)
+    summary_text = ' '.join(sentence['sentence'] for sentence in summary_sentences)
+    scores = rouge.get_scores(summary_text, original_text)
+    return scores
     
 # Atkomentēt tālāko, ja gribiet redzēt starprezultātus jeb 'breakpoints'
 
