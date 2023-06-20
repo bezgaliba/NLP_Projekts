@@ -74,14 +74,6 @@ function Main() {
                     <li>F1 Score: <span className="rougeScoreValue">{(data.rougeScores[0]['rouge-2'].f * 100).toFixed(2)}%</span></li>
                   </ul>
                 </div>
-                <div className="rougeScore">
-                  <h3>ROUGE-L:</h3>
-                  <ul>
-                    <li>Precision: <span className="rougeScoreValue">{(data.rougeScores[0]['rouge-l'].p * 100).toFixed(2)}%</span></li>
-                    <li>Recall: <span className="rougeScoreValue">{(data.rougeScores[0]['rouge-l'].r * 100).toFixed(2)}%</span></li>
-                    <li>F1 Score: <span className="rougeScoreValue">{(data.rougeScores[0]['rouge-l'].f * 100).toFixed(2)}%</span></li>
-                  </ul>
-                </div>
               </div>
               <ul className='outputSentenceParent'>
                 {data.sentenceWeights.map((item, index) => (

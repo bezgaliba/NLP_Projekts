@@ -80,7 +80,6 @@
 
 .header{
   font-family: Playfair Display;
-  padding-left: 3rem;
 }
 
 .headerIn{
@@ -123,7 +122,8 @@
 .rougeScoresContainer {
   display: flex;
   gap: 20px;
-  padding-left: 6rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .rougeScore {
